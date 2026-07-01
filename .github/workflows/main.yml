@@ -1,0 +1,21 @@
+name: proxylist
+on:
+  repository_dispatch:
+    types: [proxylist]
+  workflow_dispatch:
+jobs:
+  proxylist:
+    name: proxylist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+           bun-version: latest
+      - run: ${{secrets.proxylist}}
+      - run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add ok.txt ok.json
+          git commit -m "Update proxylist"
+          git push origin main --force
